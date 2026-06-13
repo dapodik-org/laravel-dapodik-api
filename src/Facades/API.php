@@ -27,6 +27,6 @@ class API extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'dapodik.api';
+        return 'dapodik.api.laravel';
     }
 }

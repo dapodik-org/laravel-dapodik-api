@@ -16,7 +16,7 @@ class APIServiceProvider extends PackageServiceProvider
 
     public function registeringPackage(): void
     {
-        $this->app->singleton('dapodik.eloquent.laravel', function ($app) {
+        $this->app->singleton('dapodik.api.laravel', function ($app) {
             return new APIManager($app);
         });
     }
