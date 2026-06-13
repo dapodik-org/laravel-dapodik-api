@@ -1,69 +1,83 @@
-# :package_description
+# Dapodik API for Laravel Framework
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://github.com/spatie/package-skeleton-laravel/actions/workflows/run-tests.yml/badge.svg)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://github.com/spatie/package-skeleton-laravel/actions/workflows/fix-php-code-style-issues.yml/badge.svg)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/dapodik-org/laravel-dapodik-api.svg?style=flat-square)](https://packagist.org/packages/dapodik-org/laravel-dapodik-api)
+[![GitHub Tests Action Status](https://github.com/dapodik-org/laravel-dapodik-api/actions/workflows/run-tests.yml/badge.svg)](https://github.com/dapodik-org/laravel-dapodik-api/actions/workflows/run-tests.yml)
+[![GitHub Code Style Action Status](https://github.com/dapodik-org/laravel-dapodik-api/actions/workflows/fix-php-code-style-issues.yml/badge.svg)](https://github.com/dapodik-org/laravel-dapodik-api/actions/workflows/fix-php-code-style-issues.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/dapodik-org/laravel-dapodik-api.svg?style=flat-square)](https://packagist.org/packages/dapodik-org/laravel-dapodik-api)
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+## Informasi
+Dalam penggunaan API Dapodik berarti Anda secara sadar memberikan data individu setiap entitas Dapodik kepada pihak ketiga. Segala bentuk penyalahgunaan dapat diancam dengan hukuman pidana sesuai dengan UU Perlindungan Data Pribadi No 27 Tahun 2022 Pasal 67. Mohon anda benar-benar telah paham dan yakin akan hal tersebut.
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+## Requirement
+Pastikan [Dapodik](https://dapo.dikdasmen.go.id/unduhan) sudah terinstal di komputer Anda atau di VPS.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
-php artisan migrate
+composer require dapodik-org/laravel-dapodik-api
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-config"
+php artisan vendor:publish --tag="dapodik-api-config"
 ```
 
-This is the contents of the published config file:
+## Configuration
+Configuration in the `.env` file:
 
-```php
-return [
-];
-```
+```dotenv
+# REST CONNECTION
+DAPODIK_API_CONNECTION=authentication
+DAPODIK_API_HOST=http://localhost:5774
+DAPODIK_API_USERNAME=
+DAPODIK_API_PASSWORD=
+DAPODIK_API_KODE_REGISTRASI=
 
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
+# WEBSERVICE CONNECTION
+#DAPODIK_API_CONNECTION=authorization
+#DAPODIK_API_HOST=http://localhost:5774
+DAPODIK_API_NPSN=
+DAPODIK_API_TOKEN=
 ```
 
 ## Usage
+Example in your route `web.php` file:
 
 ```php
-$:variable = new VendorName\Skeleton();
-echo $:variable->echoPhrase('Hello, VendorName!');
+use Dapodik\Laravel\API\Facades\API;
+use Illuminate\Support\Facades\Route;
+
+// REST EXAMPLE
+Route::get('/dapodik-api', function () {
+    dd(
+        API::query('PesertaDidik', [
+            'pd_module' => 'pdterdaftar',
+            'limit' => 20,
+        ])->toArray()
+    );
+});
+
+// WEBSERVICE EXAMPLE
+Route::get('/dapodik-api', function () {
+    dd(
+        API::connection('authorization')
+            ->query('getSekolah')->toArray(),
+        API::connection('authorization')
+        ->getSekolah()->toCollection(),
+        API::connection('authorization')
+        ->getSekolah()->toJson(),
+    );
+});
 ```
+Run
+```bash
+php artisan serve
+```
+
+Open in browser http://localhost:8000/dapodik-api
 
 ## Testing
 
@@ -85,7 +99,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Dapodik ORG](https://github.com/dapodik-org)
+- [Ade Reksi Susanto](https://github.com/adereksisusanto)
 - [All Contributors](../../contributors)
 
 ## License
