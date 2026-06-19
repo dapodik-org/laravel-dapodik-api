@@ -24,6 +24,9 @@ _ide_helper_models.php
 /.fleet
 /.vscode
 
+# Environment
+.env
+
 # Misc
 phpunit.xml
 phpstan.neon

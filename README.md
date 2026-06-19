@@ -93,6 +93,41 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
+### Development Setup
+
+```bash
+# Clone repository
+git clone https://github.com/dapodik-org/laravel-dapodik-api.git
+cd laravel-dapodik-api
+
+# Install dependencies
+composer install
+
+# Copy environment file
+cp .env.example .env
+
+# Run tests
+composer test
+```
+
+### Pull Request
+
+Sebelum membuat pull request, pastikan Anda membuat branch baru dari `main`:
+
+```bash
+# Buat branch baru
+git checkout -b nama-branch-anda
+
+# Lakukan perubahan dan commit
+git add .
+git commit -m "deskripsi perubahan"
+
+# Push ke remote
+git push origin nama-branch-anda
+```
+
+Kemudian buka pull request dari branch tersebut ke branch `main`.
+
 ## Security Vulnerabilities
 
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
